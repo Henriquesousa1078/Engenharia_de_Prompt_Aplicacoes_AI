@@ -4,7 +4,7 @@ A disciplina Engenharia de Prompt e Aplicação AI tem como objetivo apresentar 
 
 Que tem como objetivos
 
-- **Compreender o funcionamento de modelos de linguagem baseados em IA.<br/>
-- **Aprenda técnicas avançadas de engenharia de prompt para otimizar respostas de IA.<br/>
-- **Aplicar em conceitos práticos envolvendo chatbots, assistentes virtuais, automação de tarefas e análise de dados.<br/>
-- **Explorar ética, limitações e desafios da aplicação de IA em cenários reais.<br/>
+- Compreender o funcionamento de modelos de linguagem baseados em IA.<br/>
+- Aprenda técnicas avançadas de engenharia de prompt para otimizar respostas de IA.<br/>
+- Aplicar em conceitos práticos envolvendo chatbots, assistentes virtuais, automação de tarefas e análise de dados.<br/>
+- Explorar ética, limitações e desafios da aplicação de IA em cenários reais.<br/>
