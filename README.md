@@ -1,6 +1,6 @@
 # Engenharia_de_Prompt_Aplicacoes_AI
 
-A disciplina Engenharia de Prompt e Aplicação AI tem como objetivo apresentar aos alunos os fundamentos, técnicas e aplicações práticas de engenharia de prompt — uma área emergente e essencial para o desenvolvimento e uso eficiente de modelos de inteligência artificial generativa, como LLMs (Large Language Models).
+A disciplina Engenharia de Prompt e Aplicação AI tem como objetivo apresentar aos alunos os fundamentos, técnicas e aplicações práticas de engenharia de prompt é uma área emergente e essencial para o desenvolvimento e uso eficiente de modelos de inteligência artificial generativa, como LLMs (Large Language Models).
 
 Que tem como objetivos
 
