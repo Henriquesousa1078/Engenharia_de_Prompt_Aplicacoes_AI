@@ -114,3 +114,42 @@ As três palavras emergem da interação de três forças principais:
 
 Se quiser, posso simular isso como um modelo n-grama com probabilidades numéricas ou mostrar como um transformer (tipo GPT) chegaria nessas previsões.
 
+<br>
+<br>
+<br>
+<br>
+Vamos seguir as regras que você definiu:
+
+**Frase:** “O rato roeu a roupa de rei de roma”
+
+---
+
+### **Passo 1: identificar as palavras (sem considerar artigos)**
+
+Artigos: “O”, “a” → removidos
+
+Lista restante:
+
+1. rato
+2. roeu
+3. roupa
+4. de
+5. rei
+6. de
+7. roma
+
+---
+
+### **Passo 2: contar até a quinta palavra**
+
+A **quinta palavra** é: **“rei”**
+
+---
+
+Agora, a **terceira letra** de “rei”:
+
+* r (1ª)
+* e (2ª)
+* **i (3ª)**
+
+✅ **Resposta final: i**
