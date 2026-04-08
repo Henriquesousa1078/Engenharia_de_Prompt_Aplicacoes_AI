@@ -36,6 +36,8 @@ Aqui entra o instinto natural. Mesmo que gatos domésticos não precisem caçar,
 <br>
 Teste de previsibilade com respostas tecnicas
 <br>
+<br>
+<br>
 Ótimo — vamos tratar isso de forma mais técnica, como um problema de **modelagem de linguagem probabilística**.
 
 Considere a sequência: **“o gato come ___”**.
