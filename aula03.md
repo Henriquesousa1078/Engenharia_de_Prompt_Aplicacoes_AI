@@ -118,6 +118,11 @@ Se quiser, posso simular isso como um modelo n-grama com probabilidades numéric
 <br>
 <br>
 <br>
+
+Raciocinio CoT
+<br>
+<br>
+<br>
 Vamos seguir as regras que você definiu:
 
 **Frase:** “O rato roeu a roupa de rei de roma”
