@@ -66,5 +66,5 @@ Esse paradigma de "centauro cognitivo" (Kaplan & Haenlein, 2019) representa o fu
 **Aluno**: Henrique Sousa Santos  
 **Disciplina**: Engenharia de Prompt e Aplicações em IA  
 **Unidade**: 02  
-**Data**: 30 de abril de 2026
+**Data**: 30 de abril de 2026<br>
 **IA utilizada**: Copilot
