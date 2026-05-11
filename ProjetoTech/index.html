@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Onde Assistir - Guia de Transmissão de Futebol. Encontre em qual plataforma cada partida será exibida.">
+    <meta name="keywords" content="futebol, transmissão, campeonato, jogos, streaming">
+    <title>⚽ Onde Assistir - Guia de Transmissão de Futebol</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header Principal -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>⚽ Onde Assistir</h1>
+                <p class="tagline">Guia de Transmissão de Futebol</p>
+            </div>
+            <nav class="navbar">
+                <ul>
+                    <li><a href="#jogos">Jogos</a></li>
+                    <li><a href="#campeonatos">Campeonatos</a></li>
+                    <li><a href="#plataformas">Plataformas</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Seção Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Encontre Onde Assistir Seus Jogos Favoritos</h2>
+                <p>Centralize todas as informações de transmissão de futebol em um único lugar</p>
+                <button class="btn btn-primary">Explorar Jogos</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Busca -->
+    <section class="search-section" id="jogos">
+        <div class="container">
+            <h2>🔍 Busca de Jogos</h2>
+            <form class="search-form" id="searchForm">
+                <div class="form-group">
+                    <input type="text" placeholder="Nome do time ou campeonato" id="searchInput">
+                </div>
+                <div class="form-group">
+                    <input type="date" id="dateInput">
+                </div>
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Seção Principal de Jogos -->
+    <main class="games-section">
+        <div class="container">
+            <h2>Jogos em Destaque</h2>
+            <div class="games-grid">
+                <!-- Card de Jogo 1 -->
+                <article class="game-card">
+                    <div class="game-header">
+                        <span class="championship">Campeonato Brasileiro</span>
+                        <span class="round">Rodada 15</span>
+                    </div>
+                    <div class="game-content">
+                        <div class="team home-team">
+                            <img src="https://via.placeholder.com/50" alt="Escudo do time" class="team-shield">
+                            <h3>Flamengo</h3>
+                            <p class="ranking">1º lugar</p>
+                        </div>
+                        <div class="vs">
+                            <span class="time">20:00</span>
+                            <span class="date">09/05/2026</span>
+                        </div>
+                        <div class="team away-team">
+                            <img src="https://via.placeholder.com/50" alt="Escudo do time" class="team-shield">
+                            <h3>Palmeiras</h3>
+                            <p class="ranking">2º lugar</p>
+                        </div>
+                    </div>
+                    <div class="game-details">
+                        <p><strong>Estádio:</strong> Estádio do Maracanã</p>
+                        <p><strong>Árbitro:</strong> Ricardo Marques</p>
+                    </div>
+                    <div class="broadcasts">
+                        <h4>Transmissão em:</h4>
+                        <div class="platforms">
+                            <a href="#" class="platform globo">🔴 Globo</a>
+                            <a href="#" class="platform sportv">📺 SporTV</a>
+                            <a href="#" class="platform youtube">▶️ YouTube</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card de Jogo 2 -->
+                <article class="game-card">
+                    <div class="game-header">
+                        <span class="championship">Copa do Brasil</span>
+                        <span class="round">Oitavas</span>
+                    </div>
+                    <div class="game-content">
+                        <div class="team home-team">
+                            <img src="https://via.placeholder.com/50" alt="Escudo do time" class="team-shield">
+                            <h3>Botafogo</h3>
+                            <p class="ranking">3º lugar</p>
+                        </div>
+                        <div class="vs">
+                            <span class="time">19:30</span>
+                            <span class="date">10/05/2026</span>
+                        </div>
+                        <div class="team away-team">
+                            <img src="https://via.placeholder.com/50" alt="Escudo do time" class="team-shield">
+                            <h3>Corinthians</h3>
+                            <p class="ranking">4º lugar</p>
+                        </div>
+                    </div>
+                    <div class="game-details">
+                        <p><strong>Estádio:</strong> Estádio Nilton Santos</p>
+                        <p><strong>Árbitro:</strong> Wilton Sampaio</p>
+                    </div>
+                    <div class="broadcasts">
+                        <h4>Transmissão em:</h4>
+                        <div class="platforms">
+                            <a href="#" class="platform sportv">📺 SporTV</a>
+                            <a href="#" class="platform prime">🎬 Prime Video</a>
+                            <a href="#" class="platform twitch">🎮 Twitch</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card de Jogo 3 -->
+                <article class="game-card">
+                    <div class="game-header">
+                        <span class="championship">Libertadores</span>
+                        <span class="round">Semifinal</span>
+                    </div>
+                    <div class="game-content">
+                        <div class="team home-team">
+                            <img src="https://via.placeholder.com/50" alt="Escudo do time" class="team-shield">
+                            <h3>São Paulo</h3>
+                            <p class="ranking">5º lugar</p>
+                        </div>
+                        <div class="vs">
+                            <span class="time">21:45</span>
+                            <span class="date">11/05/2026</span>
+                        </div>
+                        <div class="team away-team">
+                            <img src="https://via.placeholder.com/50" alt="Escudo do time" class="team-shield">
+                            <h3>River Plate</h3>
+                            <p class="ranking">1º lugar</p>
+                        </div>
+                    </div>
+                    <div class="game-details">
+                        <p><strong>Estádio:</strong> Estádio do Morumbi</p>
+                        <p><strong>Árbitro:</strong> Andrés Cunha</p>
+                    </div>
+                    <div class="broadcasts">
+                        <h4>Transmissão em:</h4>
+                        <div class="platforms">
+                            <a href="#" class="platform globo">🔴 Globo</a>
+                            <a href="#" class="platform sportv">📺 SporTV</a>
+                            <a href="#" class="platform espn">📡 ESPN</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <!-- Seção de Campeonatos -->
+    <section class="championships-section" id="campeonatos">
+        <div class="container">
+            <h2>🏆 Principais Campeonatos</h2>
+            <div class="championships-grid">
+                <article class="championship-card">
+                    <h3>Campeonato Brasileiro</h3>
+                    <p class="status">Rodada 15 de 38</p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 39%"></div>
+                    </div>
+                    <p class="description">A principal competição de futebol do Brasil</p>
+                    <button class="btn btn-secondary">Ver Tabela</button>
+                </article>
+
+                <article class="championship-card">
+                    <h3>Copa do Brasil</h3>
+                    <p class="status">Oitavas de Final</p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 50%"></div>
+                    </div>
+                    <p class="description">Torneio eliminatório com times de todas as divisões</p>
+                    <button class="btn btn-secondary">Ver Tabela</button>
+                </article>
+
+                <article class="championship-card">
+                    <h3>Libertadores</h3>
+                    <p class="status">Semifinal</p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 75%"></div>
+                    </div>
+                    <p class="description">Principal competição sul-americana de clubes</p>
+                    <button class="btn btn-secondary">Ver Tabela</button>
+                </article>
+
+                <article class="championship-card">
+                    <h3>Premier League</h3>
+                    <p class="status">Rodada 32 de 38</p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 84%"></div>
+                    </div>
+                    <p class="description">Liga inglesa com os melhores clubes do mundo</p>
+                    <button class="btn btn-secondary">Ver Tabela</button>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Plataformas -->
+    <section class="platforms-section" id="plataformas">
+        <div class="container">
+            <h2>📺 Plataformas de Transmissão</h2>
+            <div class="platforms-grid">
+                <article class="platform-card">
+                    <h3>🔴 Globo</h3>
+                    <p>Transmissões da TV aberta com cobertura nacional</p>
+                    <ul>
+                        <li>Campeonato Brasileiro</li>
+                        <li>Copa do Brasil</li>
+                        <li>Jogos Internacionais</li>
+                    </ul>
+                </article>
+
+                <article class="platform-card">
+                    <h3>📺 SporTV</h3>
+                    <p>Canal por assinatura especializado em esportes</p>
+                    <ul>
+                        <li>Libertadores</li>
+                        <li>Campeonato Brasileiro</li>
+                        <li>Copa do Brasil</li>
+                    </ul>
+                </article>
+
+                <article class="platform-card">
+                    <h3>▶️ YouTube</h3>
+                    <p>Transmissões gratuitas de partidas selecionadas</p>
+                    <ul>
+                        <li>Jogos ao vivo</li>
+                        <li>Resumos</li>
+                        <li>Análises</li>
+                    </ul>
+                </article>
+
+                <article class="platform-card">
+                    <h3>🎬 Prime Video</h3>
+                    <p>Plataforma de streaming com conteúdo exclusivo</p>
+                    <ul>
+                        <li>Copa do Brasil</li>
+                        <li>Libertadores</li>
+                        <li>Conteúdo Original</li>
+                    </ul>
+                </article>
+
+                <article class="platform-card">
+                    <h3>🎮 Twitch</h3>
+                    <p>Plataforma de transmissão ao vivo com comunidade ativa</p>
+                    <ul>
+                        <li>Transmissões de Jogadores</li>
+                        <li>Análises</li>
+                        <li>Comunidade</li>
+                    </ul>
+                </article>
+
+                <article class="platform-card">
+                    <h3>📡 ESPN</h3>
+                    <p>Cobertura de competições nacionais e internacionais</p>
+                    <ul>
+                        <li>Libertadores</li>
+                        <li>Premier League</li>
+                        <li>LaLiga</li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Informações Adicionais -->
+    <section class="features-section">
+        <div class="container">
+            <h2>✨ Principais Funcionalidades</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Busca Inteligente</h3>
+                    <p>Encontre qualquer jogo por time, data ou campeonato</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">📊</div>
+                    <h3>Estatísticas</h3>
+                    <p>Acesse dados completos de times e campeonatos</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">📱</div>
+                    <h3>Responsivo</h3>
+                    <p>Funciona perfeitamente em qualquer dispositivo</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">🔔</div>
+                    <h3>Notificações</h3>
+                    <p>Receba alertas sobre seus times favoritos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contato">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>⚽ Onde Assistir</h4>
+                    <p>Sua plataforma centralizada para transmissões de futebol</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links Úteis</h4>
+                    <ul>
+                        <li><a href="#jogos">Jogos</a></li>
+                        <li><a href="#campeonatos">Campeonatos</a></li>
+                        <li><a href="#plataformas">Plataformas</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li>Email: contato@ondeassistir.com.br</li>
+                        <li>Telefone: (11) 1234-5678</li>
+                        <li><a href="#">Redes Sociais</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Onde Assistir. Todos os direitos reservados.</p>
+                <p>Desenvolvido com ❤️ para torcedores de futebol</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
