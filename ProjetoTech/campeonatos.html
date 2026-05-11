@@ -3,28 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Onde Assistir - Tabelas de Campeonatos em Tempo Real">
-    <meta name="keywords" content="futebol, tabela, campeonato, classificação">
-    <title>🏆 Campeonatos - Onde Assistir</title>
+    <meta name="description" content="Onde Assistir - Tabelas de Campeonatos">
+    <title>⚽ Onde Assistir - Campeonatos e Tabelas</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Header Principal -->
-    <header class="header">
+    <header class="header" id="header">
         <div class="container">
             <div class="logo">
                 <h1>⚽ Onde Assistir</h1>
                 <p class="tagline">Transmissão em Tempo Real</p>
             </div>
             
-            <!-- Botão de Menu Mobile -->
             <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu de navegação">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
 
-            <!-- Navegação -->
             <nav class="navbar" id="navbar">
                 <ul class="nav-list">
                     <li><a href="index.html">🎯 Jogos</a></li>
@@ -42,7 +39,7 @@
         <div class="container">
             <div class="hero-content">
                 <h2>🏆 Tabelas de Campeonatos</h2>
-                <p>Acompanhe a classificação atualizada em tempo real</p>
+                <p>Acompanhe a classificação em tempo real de todos os campeonatos</p>
             </div>
         </div>
     </section>
@@ -50,31 +47,21 @@
     <!-- Seção de Campeonatos -->
     <main class="championships-section" id="campeonatos">
         <div class="container">
-            <h2>Classificações dos Campeonatos</h2>
+            <h2>Classificações</h2>
             
             <!-- Abas de Campeonatos -->
-            <div class="championship-tabs" id="championshipTabs">
-                <button class="champ-tab active" data-league="PL" onclick="loadStandings('PL')">Premier League</button>
-                <button class="champ-tab" data-league="BSA" onclick="loadStandings('BSA')">Série A Brasil</button>
-                <button class="champ-tab" data-league="LA" onclick="loadStandings('LA')">LaLiga</button>
-                <button class="champ-tab" data-league="SA" onclick="loadStandings('SA')">Serie A Itália</button>
-                <button class="champ-tab" data-league="L1" onclick="loadStandings('L1')">Ligue 1</button>
-                <button class="champ-tab" data-league="CLI" onclick="loadStandings('CLI')">Libertadores</button>
-            </div>
-
-            <!-- Indicador de Carregamento -->
-            <div id="loading-indicator" class="loading-indicator">
-                <div class="spinner"></div>
-                <p>Carregando tabela...</p>
+            <div class="championship-tabs-container">
+                <button class="champ-tab active" data-league="PL" onclick="loadStandings('PL')">🇬🇧 Premier League</button>
+                <button class="champ-tab" data-league="BSA" onclick="loadStandings('BSA')">🇧🇷 Série A Brasil</button>
+                <button class="champ-tab" data-league="LA" onclick="loadStandings('LA')">🇪🇸 LaLiga</button>
+                <button class="champ-tab" data-league="SA" onclick="loadStandings('SA')">🇮🇹 Serie A Itália</button>
+                <button class="champ-tab" data-league="L1" onclick="loadStandings('L1')">🇫🇷 Ligue 1</button>
             </div>
 
             <!-- Container de Classificações -->
             <div id="standingsContainer" class="standings-wrapper">
-                <div class="loading-message">Carregando tabela do campeonato...</div>
+                <div class="loading-message">Carregando tabela...</div>
             </div>
-
-            <!-- Mensagem de Erro -->
-            <div id="error-message" class="error-message" style="display: none;"></div>
         </div>
     </main>
 
@@ -110,10 +97,7 @@
         </div>
     </footer>
 
-    <!-- Toast Notifications -->
-    <div id="toast-container" class="toast-container"></div>
-
     <script src="api-client.js"></script>
-    <script src="championships.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

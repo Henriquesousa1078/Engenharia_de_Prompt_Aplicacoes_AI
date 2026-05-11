@@ -4,27 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Onde Assistir - Meus Favoritos">
-    <meta name="keywords" content="futebol, favoritos, times, jogos">
-    <title>❤️ Favoritos - Onde Assistir</title>
+    <title>⚽ Onde Assistir - Meus Favoritos</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Header Principal -->
-    <header class="header">
+    <header class="header" id="header">
         <div class="container">
             <div class="logo">
                 <h1>⚽ Onde Assistir</h1>
                 <p class="tagline">Transmissão em Tempo Real</p>
             </div>
             
-            <!-- Botão de Menu Mobile -->
             <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu de navegação">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
 
-            <!-- Navegação -->
             <nav class="navbar" id="navbar">
                 <ul class="nav-list">
                     <li><a href="index.html">🎯 Jogos</a></li>
@@ -50,27 +47,29 @@
     <!-- Seção de Favoritos -->
     <main class="favorites-section">
         <div class="container">
-            <h2>Times Favoritos</h2>
+            <h2>Seus Jogos e Times Favoritos</h2>
             
-            <!-- Adicionar Time Favorito -->
-            <div class="add-favorite-section">
-                <div class="filter-group">
-                    <input type="text" id="teamInput" placeholder="Digite o nome do time" class="filter-select">
-                    <button class="btn btn-primary" onclick="addFavoriteTeam()">Adicionar</button>
+            <!-- Seção de Times Favoritos -->
+            <section class="favorites-subsection">
+                <h3>🎯 Times Favoritos</h3>
+                <div id="favoritesTeamsContainer" class="favorites-grid">
+                    <div class="empty-state">
+                        <p>Nenhum time adicionado aos favoritos</p>
+                        <p class="hint">Clique no ❤️ nos jogos para adicionar seus times favoritos</p>
+                    </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- Lista de Favoritos -->
-            <div id="favoritesList" class="favorites-grid">
-                <div class="empty-state">
-                    <p>Nenhum time favorito ainda. Adicione seu primeiro time!</p>
+            <!-- Seção de Jogos Favoritos -->
+            <section class="favorites-subsection">
+                <h3>⭐ Jogos Favoritos</h3>
+                <div id="favoritesGamesContainer" class="games-grid">
+                    <div class="empty-state">
+                        <p>Nenhum jogo adicionado aos favoritos</p>
+                        <p class="hint">Clique no ⭐ nos jogos para adicionar aos favoritos</p>
+                    </div>
                 </div>
-            </div>
-
-            <h2 style="margin-top: 2rem;">Próximos Jogos dos Meus Times</h2>
-            <div id="favoritesGames" class="games-grid">
-                <div class="loading-message">Carregando jogos dos seus times favoritos...</div>
-            </div>
+            </section>
         </div>
     </main>
 
@@ -107,6 +106,6 @@
     </footer>
 
     <script src="api-client.js"></script>
-    <script src="favorites.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
