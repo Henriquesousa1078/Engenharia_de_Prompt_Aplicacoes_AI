@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Onde Assistir - Tabelas de Campeonatos em Tempo Real">
+    <meta name="keywords" content="futebol, tabela, campeonato, classificação">
+    <title>🏆 Campeonatos - Onde Assistir</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header Principal -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>⚽ Onde Assistir</h1>
+                <p class="tagline">Transmissão em Tempo Real</p>
+            </div>
+            
+            <!-- Botão de Menu Mobile -->
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu de navegação">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <!-- Navegação -->
+            <nav class="navbar" id="navbar">
+                <ul class="nav-list">
+                    <li><a href="index.html">🎯 Jogos</a></li>
+                    <li><a href="campeonatos.html">🏆 Campeonatos</a></li>
+                    <li><a href="plataformas.html">📺 Plataformas</a></li>
+                    <li><a href="favoritos.html">❤️ Favoritos</a></li>
+                    <li><a href="#contato">📞 Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Seção Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>🏆 Tabelas de Campeonatos</h2>
+                <p>Acompanhe a classificação atualizada em tempo real</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Campeonatos -->
+    <main class="championships-section" id="campeonatos">
+        <div class="container">
+            <h2>Classificações dos Campeonatos</h2>
+            
+            <!-- Abas de Campeonatos -->
+            <div class="championship-tabs" id="championshipTabs">
+                <button class="champ-tab active" data-league="PL" onclick="loadStandings('PL')">Premier League</button>
+                <button class="champ-tab" data-league="BSA" onclick="loadStandings('BSA')">Série A Brasil</button>
+                <button class="champ-tab" data-league="LA" onclick="loadStandings('LA')">LaLiga</button>
+                <button class="champ-tab" data-league="SA" onclick="loadStandings('SA')">Serie A Itália</button>
+                <button class="champ-tab" data-league="L1" onclick="loadStandings('L1')">Ligue 1</button>
+                <button class="champ-tab" data-league="CLI" onclick="loadStandings('CLI')">Libertadores</button>
+            </div>
+
+            <!-- Indicador de Carregamento -->
+            <div id="loading-indicator" class="loading-indicator">
+                <div class="spinner"></div>
+                <p>Carregando tabela...</p>
+            </div>
+
+            <!-- Container de Classificações -->
+            <div id="standingsContainer" class="standings-wrapper">
+                <div class="loading-message">Carregando tabela do campeonato...</div>
+            </div>
+
+            <!-- Mensagem de Erro -->
+            <div id="error-message" class="error-message" style="display: none;"></div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" id="contato">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>⚽ Onde Assistir</h4>
+                    <p>Sua plataforma centralizada para transmissões de futebol em tempo real</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links Úteis</h4>
+                    <ul>
+                        <li><a href="index.html">Jogos</a></li>
+                        <li><a href="campeonatos.html">Campeonatos</a></li>
+                        <li><a href="plataformas.html">Plataformas</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li>📧 contato@ondeassistir.com.br</li>
+                        <li>📞 (11) 1234-5678</li>
+                        <li><a href="#">🌐 Redes Sociais</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Onde Assistir. Todos os direitos reservados.</p>
+                <p>Desenvolvido com ❤️ para torcedores de futebol</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="api-client.js"></script>
+    <script src="championships.js"></script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Onde Assistir - Meus Favoritos">
+    <meta name="keywords" content="futebol, favoritos, times, jogos">
+    <title>❤️ Favoritos - Onde Assistir</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header Principal -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>⚽ Onde Assistir</h1>
+                <p class="tagline">Transmissão em Tempo Real</p>
+            </div>
+            
+            <!-- Botão de Menu Mobile -->
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu de navegação">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <!-- Navegação -->
+            <nav class="navbar" id="navbar">
+                <ul class="nav-list">
+                    <li><a href="index.html">🎯 Jogos</a></li>
+                    <li><a href="campeonatos.html">🏆 Campeonatos</a></li>
+                    <li><a href="plataformas.html">📺 Plataformas</a></li>
+                    <li><a href="favoritos.html">❤️ Favoritos</a></li>
+                    <li><a href="#contato">📞 Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Seção Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>❤️ Meus Favoritos</h2>
+                <p>Acompanhe seus times e jogos favoritos</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Favoritos -->
+    <main class="favorites-section">
+        <div class="container">
+            <h2>Times Favoritos</h2>
+            
+            <!-- Adicionar Time Favorito -->
+            <div class="add-favorite-section">
+                <div class="filter-group">
+                    <input type="text" id="teamInput" placeholder="Digite o nome do time" class="filter-select">
+                    <button class="btn btn-primary" onclick="addFavoriteTeam()">Adicionar</button>
+                </div>
+            </div>
+
+            <!-- Lista de Favoritos -->
+            <div id="favoritesList" class="favorites-grid">
+                <div class="empty-state">
+                    <p>Nenhum time favorito ainda. Adicione seu primeiro time!</p>
+                </div>
+            </div>
+
+            <h2 style="margin-top: 2rem;">Próximos Jogos dos Meus Times</h2>
+            <div id="favoritesGames" class="games-grid">
+                <div class="loading-message">Carregando jogos dos seus times favoritos...</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" id="contato">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>⚽ Onde Assistir</h4>
+                    <p>Sua plataforma centralizada para transmissões de futebol em tempo real</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links Úteis</h4>
+                    <ul>
+                        <li><a href="index.html">Jogos</a></li>
+                        <li><a href="campeonatos.html">Campeonatos</a></li>
+                        <li><a href="plataformas.html">Plataformas</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li>📧 contato@ondeassistir.com.br</li>
+                        <li>📞 (11) 1234-5678</li>
+                        <li><a href="#">🌐 Redes Sociais</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Onde Assistir. Todos os direitos reservados.</p>
+                <p>Desenvolvido com ❤️ para torcedores de futebol</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="api-client.js"></script>
+    <script src="favorites.js"></script>
+</body>
+</html>

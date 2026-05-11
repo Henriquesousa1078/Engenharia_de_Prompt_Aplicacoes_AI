@@ -4,29 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Onde Assistir - Guia de Transmissão de Futebol em Tempo Real">
-    <meta name="keywords" content="futebol, transmissão, campeonato, jogos, streaming, api">
-    <title>⚽ Onde Assistir - Transmissão de Futebol em Tempo Real</title>
+    <meta name="keywords" content="futebol, transmissão, campeonato, jogos, streaming, API">
+    <title>⚽ Onde Assistir - Transmissões em Tempo Real</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Header Principal -->
-    <header class="header">
+    <header class="header" id="header">
         <div class="container">
             <div class="logo">
                 <h1>⚽ Onde Assistir</h1>
                 <p class="tagline">Transmissão em Tempo Real</p>
             </div>
-            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+            
+            <!-- Botão de Menu Mobile -->
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu de navegação">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
+
+            <!-- Navegação -->
             <nav class="navbar" id="navbar">
-                <ul>
-                    <li><a href="#jogos">Jogos</a></li>
-                    <li><a href="#campeonatos">Campeonatos</a></li>
-                    <li><a href="#plataformas">Plataformas</a></li>
-                    <li><a href="#contato">Contato</a></li>
+                <ul class="nav-list">
+                    <li><a href="index.html">🎯 Jogos</a></li>
+                    <li><a href="campeonatos.html">🏆 Campeonatos</a></li>
+                    <li><a href="plataformas.html">📺 Plataformas</a></li>
+                    <li><a href="favoritos.html">❤️ Favoritos</a></li>
+                    <li><a href="#contato">📞 Contato</a></li>
                 </ul>
             </nav>
         </div>
@@ -43,171 +48,72 @@
         </div>
     </section>
 
-    <!-- Seção de Busca -->
-    <section class="search-section" id="jogos">
+    <!-- Seção de Filtros -->
+    <section class="filters-section" id="filtros">
         <div class="container">
-            <h2>🔍 Busca de Jogos</h2>
-            <form class="search-form" id="searchForm">
-                <div class="form-group">
-                    <input type="text" placeholder="Time ou campeonato..." id="searchInput" autocomplete="off">
-                </div>
-                <div class="form-group">
-                    <select id="leagueFilter">
+            <h2>🔍 Filtrar Jogos</h2>
+            <div class="filters-container">
+                <div class="filter-group">
+                    <label for="championship-filter">Campeonato:</label>
+                    <select id="championship-filter" class="filter-select" onchange="applyFilters()">
                         <option value="">Todos os Campeonatos</option>
                         <option value="PL">Premier League</option>
-                        <option value="BRA">Série A Brasil</option>
-                        <option value="COPA">Copa do Brasil</option>
-                        <option value="LIB">Libertadores</option>
+                        <option value="BSA">Série A Brasil</option>
+                        <option value="CDB">Copa do Brasil</option>
+                        <option value="CLI">Libertadores</option>
                         <option value="LA">LaLiga</option>
-                        <option value="SERIE_A">Serie A Itália</option>
-                        <option value="LIGUE1">Ligue 1</option>
-                        <option value="BUNDESLIGA">Bundesliga</option>
+                        <option value="SA">Serie A Itália</option>
+                        <option value="L1">Ligue 1</option>
+                        <option value="BL1">Bundesliga</option>
                     </select>
                 </div>
-                <button type="button" class="btn btn-primary" id="searchBtn">Buscar Jogos</button>
-            </form>
-            <div id="loadingSpinner" class="spinner" style="display: none;"></div>
+
+                <div class="filter-group">
+                    <label for="date-filter">Data:</label>
+                    <input type="date" id="date-filter" class="filter-select" onchange="applyFilters()">
+                </div>
+
+                <div class="filter-group">
+                    <label for="team-filter">Time:</label>
+                    <input type="text" id="team-filter" placeholder="Digite o nome do time" class="filter-select" onchange="applyFilters()">
+                </div>
+
+                <button class="btn btn-primary" onclick="applyFilters()">Filtrar</button>
+                <button class="btn btn-secondary" onclick="resetFilters()">Limpar Filtros</button>
+            </div>
+
+            <div class="filter-status" id="filterStatus"></div>
         </div>
     </section>
 
     <!-- Seção Principal de Jogos -->
-    <main class="games-section">
+    <main class="games-section" id="jogos">
         <div class="container">
             <h2>📅 Próximos Jogos</h2>
+            
+            <!-- Filtros por Data -->
             <div class="filter-tabs">
-                <button class="tab-btn active" data-tab="all">Todos</button>
-                <button class="tab-btn" data-tab="today">Hoje</button>
-                <button class="tab-btn" data-tab="tomorrow">Amanhã</button>
-                <button class="tab-btn" data-tab="week">Próxima Semana</button>
+                <button class="tab-btn active" data-tab="all" onclick="filterGamesByDate('all')">Todos</button>
+                <button class="tab-btn" data-tab="today" onclick="filterGamesByDate('today')">Hoje</button>
+                <button class="tab-btn" data-tab="tomorrow" onclick="filterGamesByDate('tomorrow')">Amanhã</button>
+                <button class="tab-btn" data-tab="week" onclick="filterGamesByDate('week')">Próxima Semana</button>
             </div>
+
+            <!-- Indicador de Carregamento -->
+            <div id="loading-indicator" class="loading-indicator">
+                <div class="spinner"></div>
+                <p>Carregando dados em tempo real...</p>
+            </div>
+
+            <!-- Grid de Jogos -->
             <div id="gamesContainer" class="games-grid">
                 <div class="loading-message">Carregando dados dos jogos...</div>
             </div>
+
+            <!-- Mensagem de Erro -->
+            <div id="error-message" class="error-message" style="display: none;"></div>
         </div>
     </main>
-
-    <!-- Seção de Campeonatos -->
-    <section class="championships-section" id="campeonatos">
-        <div class="container">
-            <h2>🏆 Tabelas de Campeonatos</h2>
-            <div class="championship-tabs">
-                <button class="champ-tab active" data-league="PL">Premier League</button>
-                <button class="champ-tab" data-league="BRA">Série A Brasil</button>
-                <button class="champ-tab" data-league="LA">LaLiga</button>
-                <button class="champ-tab" data-league="SERIE_A">Serie A Itália</button>
-                <button class="champ-tab" data-league="LIGUE1">Ligue 1</button>
-            </div>
-            <div id="standingsContainer" class="standings-wrapper">
-                <div class="loading-message">Carregando tabela...</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Seção de Plataformas -->
-    <section class="platforms-section" id="plataformas">
-        <div class="container">
-            <h2>📺 Plataformas de Transmissão</h2>
-            <div class="platforms-grid">
-                <article class="platform-card">
-                    <h3>🔴 Globo</h3>
-                    <p>Transmissões da TV aberta com cobertura nacional</p>
-                    <ul>
-                        <li>Campeonato Brasileiro</li>
-                        <li>Copa do Brasil</li>
-                        <li>Jogos Internacionais</li>
-                    </ul>
-                    <a href="https://globoplay.globo.com" target="_blank" class="btn btn-primary">Acessar</a>
-                </article>
-
-                <article class="platform-card">
-                    <h3>📺 SporTV</h3>
-                    <p>Canal por assinatura especializado em esportes</p>
-                    <ul>
-                        <li>Libertadores</li>
-                        <li>Campeonato Brasileiro</li>
-                        <li>Copa do Brasil</li>
-                    </ul>
-                    <a href="https://www.sportv.com.br" target="_blank" class="btn btn-primary">Acessar</a>
-                </article>
-
-                <article class="platform-card">
-                    <h3>▶️ YouTube</h3>
-                    <p>Transmissões gratuitas de partidas selecionadas</p>
-                    <ul>
-                        <li>Jogos ao vivo</li>
-                        <li>Resumos</li>
-                        <li>Análises</li>
-                    </ul>
-                    <a href="https://www.youtube.com" target="_blank" class="btn btn-primary">Acessar</a>
-                </article>
-
-                <article class="platform-card">
-                    <h3>🎬 Prime Video</h3>
-                    <p>Plataforma de streaming com conteúdo exclusivo</p>
-                    <ul>
-                        <li>Copa do Brasil</li>
-                        <li>Libertadores</li>
-                        <li>Conteúdo Original</li>
-                    </ul>
-                    <a href="https://www.primevideo.com" target="_blank" class="btn btn-primary">Acessar</a>
-                </article>
-
-                <article class="platform-card">
-                    <h3>🎮 Twitch</h3>
-                    <p>Plataforma de transmissão ao vivo com comunidade ativa</p>
-                    <ul>
-                        <li>Transmissões de Jogadores</li>
-                        <li>Análises</li>
-                        <li>Comunidade</li>
-                    </ul>
-                    <a href="https://www.twitch.tv" target="_blank" class="btn btn-primary">Acessar</a>
-                </article>
-
-                <article class="platform-card">
-                    <h3>📡 ESPN</h3>
-                    <p>Cobertura de competições nacionais e internacionais</p>
-                    <ul>
-                        <li>Libertadores</li>
-                        <li>Premier League</li>
-                        <li>LaLiga</li>
-                    </ul>
-                    <a href="https://www.espn.com.br" target="_blank" class="btn btn-primary">Acessar</a>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Seção de Features -->
-    <section class="features-section">
-        <div class="container">
-            <h2>✨ Principais Funcionalidades</h2>
-            <div class="features-grid">
-                <div class="feature">
-                    <div class="feature-icon">🔄</div>
-                    <h3>Dados em Tempo Real</h3>
-                    <p>Informações atualizadas automaticamente via API</p>
-                </div>
-
-                <div class="feature">
-                    <div class="feature-icon">📊</div>
-                    <h3>Tabelas Completas</h3>
-                    <p>Acesse a classificação de todos os campeonatos</p>
-                </div>
-
-                <div class="feature">
-                    <div class="feature-icon">📱</div>
-                    <h3>100% Responsivo</h3>
-                    <p>Funciona perfeitamente em qualquer dispositivo</p>
-                </div>
-
-                <div class="feature">
-                    <div class="feature-icon">🔗</div>
-                    <h3>Links Diretos</h3>
-                    <p>Acesso direto às plataformas de transmissão</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Footer -->
     <footer class="footer" id="contato">
@@ -220,17 +126,17 @@
                 <div class="footer-section">
                     <h4>Links Úteis</h4>
                     <ul>
-                        <li><a href="#jogos">Jogos</a></li>
-                        <li><a href="#campeonatos">Campeonatos</a></li>
-                        <li><a href="#plataformas">Plataformas</a></li>
+                        <li><a href="index.html">Jogos</a></li>
+                        <li><a href="campeonatos.html">Campeonatos</a></li>
+                        <li><a href="plataformas.html">Plataformas</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Contato</h4>
                     <ul>
-                        <li>Email: contato@ondeassistir.com.br</li>
-                        <li>Telefone: (11) 1234-5678</li>
-                        <li><a href="#">Redes Sociais</a></li>
+                        <li>📧 contato@ondeassistir.com.br</li>
+                        <li>📞 (11) 1234-5678</li>
+                        <li><a href="#">🌐 Redes Sociais</a></li>
                     </ul>
                 </div>
             </div>
@@ -241,6 +147,18 @@
         </div>
     </footer>
 
+    <!-- Modal de Detalhes do Jogo -->
+    <div id="gameModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="gameDetails" class="game-details-modal"></div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="api-client.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
