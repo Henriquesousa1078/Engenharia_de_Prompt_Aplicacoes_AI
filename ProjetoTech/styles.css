@@ -19,6 +19,7 @@
     --color-danger: #ef4444;
     --color-warning: #f59e0b;
     --color-success: #10b981;
+    --color-info: #3b82f6;
     
     /* Espaçamento */
     --spacing-xs: 0.25rem;
@@ -146,6 +147,8 @@ a:hover {
     transition: all var(--transition-fast);
     text-align: center;
     white-space: nowrap;
+    position: relative;
+    overflow: hidden;
 }
 
 .btn-primary {
@@ -172,6 +175,46 @@ a:hover {
     border-color: var(--color-primary);
 }
 
+.btn-small {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+}
+
+/* ========================================
+   LOADING E SKELETON
+   ======================================== */
+
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--color-light-gray);
+    border-radius: 50%;
+    border-top-color: var(--color-primary);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.skeleton {
+    background: linear-gradient(90deg, var(--color-light-gray) 25%, var(--color-medium-gray) 50%, var(--color-light-gray) 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.skeleton-card {
+    height: 300px;
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
 /* ========================================
    HEADER
    ======================================== */
@@ -184,6 +227,11 @@ a:hover {
     position: sticky;
     top: 0;
     z-index: 100;
+    transition: transform var(--transition-fast);
+}
+
+.header.hidden {
+    transform: translateY(-100%);
 }
 
 .header .container {
@@ -198,11 +246,13 @@ a:hover {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-sm);
+    flex-shrink: 0;
 }
 
 .logo h1 {
     color: var(--color-primary);
     margin-bottom: 0;
+    font-size: var(--font-size-2xl);
 }
 
 .tagline {
@@ -211,21 +261,59 @@ a:hover {
     margin-bottom: 0;
 }
 
+.navbar {
+    flex: 1;
+}
+
 .navbar ul {
     display: flex;
     list-style: none;
-    gap: var(--spacing-xl);
+    gap: var(--spacing-lg);
     flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.navbar li {
+    position: relative;
 }
 
 .navbar a {
     color: var(--color-white);
     font-weight: 500;
     transition: color var(--transition-fast);
+    padding: var(--spacing-md) 0;
+    display: block;
+    position: relative;
+}
+
+.navbar a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-primary);
+    transition: width var(--transition-fast);
 }
 
 .navbar a:hover {
     color: var(--color-primary);
+}
+
+.navbar a:hover::after {
+    width: 100%;
+}
+
+/* Menu Toggle para Mobile */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--color-white);
+    font-size: var(--font-size-xl);
+    cursor: pointer;
+    padding: var(--spacing-md);
 }
 
 /* ========================================
@@ -248,12 +336,29 @@ a:hover {
     color: var(--color-white);
     font-size: var(--font-size-4xl);
     margin-bottom: var(--spacing-lg);
+    animation: slideInUp 0.8s ease-out;
 }
 
 .hero p {
     font-size: var(--font-size-lg);
     color: var(--color-light-gray);
     margin-bottom: var(--spacing-xl);
+    animation: slideInUp 0.8s ease-out 0.2s both;
+}
+
+.hero .btn {
+    animation: slideInUp 0.8s ease-out 0.4s both;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* ========================================
@@ -283,16 +388,27 @@ a:hover {
     min-width: 200px;
 }
 
-.form-group input {
+.form-group label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-weight: 600;
+    color: var(--color-black);
+}
+
+.form-group input,
+.form-group select {
     width: 100%;
     padding: var(--spacing-md);
     border: 2px solid var(--color-medium-gray);
     border-radius: var(--radius-lg);
     font-size: var(--font-size-base);
-    transition: border-color var(--transition-fast);
+    transition: all var(--transition-fast);
+    background-color: var(--color-white);
+    color: var(--color-black);
 }
 
-.form-group input:focus {
+.form-group input:focus,
+.form-group select:focus {
     outline: none;
     border-color: var(--color-primary);
     box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
@@ -311,9 +427,35 @@ a:hover {
     margin-bottom: var(--spacing-3xl);
 }
 
+.filter-tabs {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin-bottom: var(--spacing-2xl);
+    flex-wrap: wrap;
+}
+
+.filter-tab {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border: 2px solid var(--color-medium-gray);
+    border-radius: var(--radius-full);
+    background-color: var(--color-white);
+    color: var(--color-dark-gray);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-weight: 500;
+}
+
+.filter-tab:hover,
+.filter-tab.active {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
 .games-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: var(--spacing-xl);
     margin-bottom: var(--spacing-3xl);
 }
@@ -325,6 +467,8 @@ a:hover {
     overflow: hidden;
     transition: all var(--transition-normal);
     box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
 }
 
 .game-card:hover {
@@ -360,30 +504,49 @@ a:hover {
     justify-content: space-between;
     padding: var(--spacing-xl);
     gap: var(--spacing-lg);
+    flex: 1;
 }
 
 .team {
     flex: 1;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .team-shield {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     margin-bottom: var(--spacing-sm);
     border-radius: var(--radius-md);
     object-fit: cover;
+    background-color: var(--color-light-gray);
 }
 
 .team h3 {
     font-size: var(--font-size-lg);
     margin-bottom: var(--spacing-sm);
     color: var(--color-black);
+    word-break: break-word;
 }
 
 .team .ranking {
     font-size: var(--font-size-sm);
     color: var(--color-medium-gray);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    justify-content: center;
+}
+
+.ranking-badge {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-radius: var(--radius-full);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-weight: 700;
+    font-size: var(--font-size-sm);
 }
 
 .vs {
@@ -411,10 +574,10 @@ a:hover {
     border-top: 1px solid var(--color-light-gray);
     padding: var(--spacing-md) var(--spacing-lg);
     background-color: var(--color-light-gray);
+    font-size: var(--font-size-sm);
 }
 
 .game-details p {
-    font-size: var(--font-size-sm);
     margin-bottom: var(--spacing-sm);
 }
 
@@ -422,8 +585,15 @@ a:hover {
     margin-bottom: 0;
 }
 
+.game-details strong {
+    color: var(--color-black);
+}
+
 .broadcasts {
     padding: var(--spacing-lg);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .broadcasts h4 {
@@ -436,6 +606,8 @@ a:hover {
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-md);
+    flex-grow: 1;
+    align-content: flex-start;
 }
 
 .platform {
@@ -446,12 +618,19 @@ a:hover {
     font-size: var(--font-size-sm);
     font-weight: 500;
     transition: all var(--transition-fast);
+    cursor: pointer;
+    border: 1px solid transparent;
 }
 
 .platform:hover {
     background-color: var(--color-primary);
     color: var(--color-white);
     transform: scale(1.05);
+    border-color: var(--color-primary-dark);
+}
+
+.platform a {
+    color: inherit;
 }
 
 /* ========================================
@@ -470,7 +649,7 @@ a:hover {
 
 .championships-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: var(--spacing-xl);
 }
 
@@ -519,6 +698,42 @@ a:hover {
     font-size: var(--font-size-sm);
     color: var(--color-medium-gray);
     margin-bottom: var(--spacing-lg);
+}
+
+.standings-table {
+    width: 100%;
+    margin-top: var(--spacing-lg);
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+}
+
+.standings-table th {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: var(--spacing-sm);
+    text-align: left;
+    font-weight: 600;
+}
+
+.standings-table td {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-light-gray);
+}
+
+.standings-table tr:hover {
+    background-color: var(--color-light-gray);
+}
+
+.team-name {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.team-name img {
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius-md);
 }
 
 /* ========================================
@@ -610,6 +825,11 @@ a:hover {
 .feature {
     text-align: center;
     padding: var(--spacing-xl);
+    transition: all var(--transition-normal);
+}
+
+.feature:hover {
+    transform: translateY(-4px);
 }
 
 .feature-icon {
@@ -627,6 +847,53 @@ a:hover {
     color: var(--color-light-gray);
     font-size: var(--font-size-sm);
     margin-bottom: 0;
+}
+
+/* ========================================
+   NOTIFICAÇÕES
+   ======================================== */
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    animation: slideIn 0.3s ease-out;
+    max-width: 400px;
+}
+
+.notification-success {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.notification-error {
+    background-color: var(--color-danger);
+    color: var(--color-white);
+}
+
+.notification-info {
+    background-color: var(--color-info);
+    color: var(--color-white);
+}
+
+.notification-warning {
+    background-color: var(--color-warning);
+    color: var(--color-white);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 /* ========================================
@@ -690,7 +957,7 @@ a:hover {
    RESPONSIVIDADE - TABLETS
    ======================================== */
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     :root {
         --font-size-4xl: 1.875rem;
         --font-size-3xl: 1.5rem;
@@ -698,40 +965,16 @@ a:hover {
         --spacing-3xl: 2rem;
     }
 
-    .header .container {
-        gap: var(--spacing-md);
+    .games-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     }
 
     .navbar ul {
-        width: 100%;
-        justify-content: flex-start;
-        gap: var(--spacing-lg);
-    }
-
-    .hero {
-        padding: var(--spacing-2xl) 0;
-    }
-
-    .hero h2 {
-        font-size: var(--font-size-3xl);
-    }
-
-    .search-form {
-        flex-direction: column;
-    }
-
-    .search-form .btn {
-        width: 100%;
-    }
-
-    .game-content {
-        padding: var(--spacing-lg);
-        flex-direction: column;
         gap: var(--spacing-md);
     }
 
-    .teams {
-        flex-direction: column;
+    .navbar a {
+        padding: var(--spacing-sm) 0;
     }
 }
 
@@ -739,7 +982,7 @@ a:hover {
    RESPONSIVIDADE - MOBILE
    ======================================== */
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     :root {
         --font-size-3xl: 1.25rem;
         --font-size-2xl: 1.125rem;
@@ -753,32 +996,117 @@ a:hover {
     }
 
     .header .container {
-        flex-direction: column;
-        gap: var(--spacing-lg);
+        justify-content: space-between;
+        gap: var(--spacing-md);
     }
 
     .logo h1 {
-        font-size: var(--font-size-2xl);
+        font-size: var(--font-size-xl);
+    }
+
+    .tagline {
+        display: none;
+    }
+
+    .navbar {
+        width: 100%;
+        order: 3;
     }
 
     .navbar ul {
-        flex-direction: column;
-        gap: var(--spacing-md);
         width: 100%;
+        flex-direction: row;
+        gap: var(--spacing-md);
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .navbar li {
+        flex: 0 0 auto;
     }
 
     .navbar a {
-        display: block;
-        padding: var(--spacing-md);
-        background-color: var(--color-dark-gray);
+        padding: var(--spacing-sm) var(--spacing-md);
         border-radius: var(--radius-md);
+        transition: all var(--transition-fast);
+        display: inline-block;
+    }
+
+    .navbar a:hover {
+        background-color: rgba(34, 197, 94, 0.1);
+        text-decoration: none;
+    }
+
+    .navbar a::after {
+        display: none;
+    }
+
+    .hero {
+        padding: var(--spacing-2xl) 0;
     }
 
     .hero h2 {
         font-size: var(--font-size-2xl);
     }
 
-    .games-grid,
+    .search-form {
+        flex-direction: column;
+    }
+
+    .search-form .btn {
+        width: 100%;
+    }
+
+    .form-group {
+        min-width: 100%;
+    }
+
+    .games-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .game-content {
+        padding: var(--spacing-lg);
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+
+    .filter-tabs {
+        gap: var(--spacing-sm);
+    }
+
+    .filter-tab {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: var(--font-size-sm);
+    }
+
+    .platforms {
+        gap: var(--spacing-sm);
+    }
+
+    .platform {
+        font-size: var(--font-size-xs);
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    .standings-table {
+        font-size: 0.75rem;
+    }
+
+    .standings-table th,
+    .standings-table td {
+        padding: var(--spacing-xs);
+    }
+
+    .team-name {
+        gap: var(--spacing-xs);
+    }
+
+    .team-name img {
+        width: 24px;
+        height: 24px;
+    }
+
     .championships-grid,
     .platforms-grid,
     .features-grid {
@@ -789,23 +1117,69 @@ a:hover {
         width: 100%;
     }
 
-    .game-header {
-        flex-direction: column;
-        gap: var(--spacing-md);
-        text-align: center;
-    }
-
-    .platforms {
-        flex-direction: column;
-    }
-
-    .platform {
-        width: 100%;
-        text-align: center;
-    }
-
     .footer-content {
         grid-template-columns: 1fr;
+    }
+
+    .notification {
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --font-size-3xl: 1.125rem;
+        --font-size-2xl: 1rem;
+        --spacing-lg: 0.75rem;
+        --spacing-xl: 0.75rem;
+        --spacing-2xl: 1rem;
+    }
+
+    .logo h1 {
+        font-size: var(--font-size-lg);
+    }
+
+    .navbar ul {
+        gap: var(--spacing-xs);
+    }
+
+    .navbar a {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: var(--font-size-sm);
+    }
+
+    .game-card {
+        margin-bottom: 0;
+    }
+
+    .game-header {
+        padding: var(--spacing-md);
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        text-align: center;
+    }
+
+    .team h3 {
+        font-size: var(--font-size-base);
+    }
+
+    .vs .time {
+        font-size: var(--font-size-lg);
+    }
+
+    .game-details {
+        font-size: 0.75rem;
+        padding: var(--spacing-md);
+    }
+
+    .broadcasts {
+        padding: var(--spacing-md);
+    }
+
+    .broadcasts h4 {
+        font-size: var(--font-size-sm);
     }
 }
 
@@ -824,12 +1198,37 @@ a:hover {
 /* Focus Visible para Acessibilidade */
 button:focus-visible,
 a:focus-visible,
-input:focus-visible {
+input:focus-visible,
+select:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
 }
 
-/* Dark Mode (opcional, comentado) */
-@media (prefers-color-scheme: dark) {
-    /* Pode ser expandido conforme necessário */
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.mt-md {
+    margin-top: var(--spacing-md);
+}
+
+.mb-md {
+    margin-bottom: var(--spacing-md);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.error-message {
+    color: var(--color-danger);
+    font-size: var(--font-size-sm);
+    margin-top: var(--spacing-sm);
+}
+
+.success-message {
+    color: var(--color-success);
+    font-size: var(--font-size-sm);
+    margin-top: var(--spacing-sm);
 }
