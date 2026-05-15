@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Tabela – Onde Assistir</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .page-hero{padding:3rem 0 2rem;border-bottom:1px solid var(--border);margin-bottom:2.5rem}
+    .league-selector{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2rem}
+    .league-btn{display:flex;align-items:center;gap:.5rem;padding:.55rem 1.1rem;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--grey);font-size:.82rem;font-weight:600;cursor:pointer;transition:all var(--t)}
+    .league-btn:hover,.league-btn.active{background:var(--green-muted);border-color:var(--green);color:var(--green)}
+    .table-wrap{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:auto;margin-bottom:2rem}
+    .legend{display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem}
+    .legend-item{display:flex;align-items:center;gap:.5rem;font-size:.75rem;color:var(--grey)}
+    .legend-dot{width:10px;height:10px;border-radius:2px}
+    .next-matches-section{margin-top:3rem}
+    .next-matches-section h2{font-family:var(--ff-d);font-size:1.8rem;letter-spacing:.04em;margin-bottom:1.2rem}
+    .matches-grid{display:grid;gap:.9rem}
+    @media(max-width:700px){
+      .standings-table .hide-mobile{display:none}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="container">
+      <a href="index.html" class="nav-logo">⚽ Onde<em>Assistir</em></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="jogos.html">Jogos</a></li>
+        <li><a href="tabela.html">Tabela</a></li>
+        <li><a href="jogos.html" class="nav-cta">Ver Jogos</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </nav>
+  </header>
+
+  <main class="page-wrap">
+    <section class="page-hero">
+      <div class="container">
+        <span class="tag">🏆 Classificação</span>
+        <h1 class="section-title" style="margin-top:.6rem">TABELA DE CLASSIFICAÇÃO</h1>
+        <p class="section-sub">Selecione o campeonato para ver a tabela atualizada e os próximos jogos.</p>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="league-selector" id="leagueSelector"></div>
+
+      <div id="tableWrap"></div>
+
+      <div class="next-matches-section">
+        <h2>Próximos Jogos</h2>
+        <div id="nextMatchesGrid" class="matches-grid"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">⚽ Onde<em>Assistir</em></div>
+        <nav class="footer-links">
+          <a href="index.html">Início</a><a href="jogos.html">Jogos</a><a href="tabela.html">Tabela</a>
+        </nav>
+      </div>
+      <p class="footer-copy">© 2025 OndeAssistir — dados via TheSportsDB (CC BY-SA)</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+  (async () => {
+    const { LEAGUES, getStandings, getNextEvents, renderMatchCard, renderSkeletons, revealAll } = window.OA;
+
+    const selectorEl  = document.getElementById('leagueSelector');
+    const tableWrapEl = document.getElementById('tableWrap');
+    const nextEl      = document.getElementById('nextMatchesGrid');
+
+    // Build league buttons
+    selectorEl.innerHTML = LEAGUES.map((l,i) =>
+      `<button class="league-btn${i===0?' active':''}" data-id="${l.id}" data-name="${l.name}">${l.flag} ${l.name}</button>`
+    ).join('');
+
+    function formDots(form) {
+      if (!form) return '—';
+      return form.split('').slice(-5).map(c => {
+        const cls = c==='W'?'w':c==='D'?'d':'l';
+        return `<span class="form-dot ${cls}" title="${c==='W'?'Vitória':c==='D'?'Empate':'Derrota'}"></span>`;
+      }).join('');
+    }
+
+    function qualClass(pos, total) {
+      if (pos <= 4) return 'q-champions';
+      if (pos <= 6) return 'q-europa';
+      if (pos > total - 3) return 'q-relegation';
+      return '';
+    }
+
+    async function loadLeague(leagueId, leagueName) {
+      tableWrapEl.innerHTML = `<div class="skeleton" style="height:400px"></div>`;
+      nextEl.innerHTML = renderSkeletons(3);
+
+      // Parallel load
+      const [standings, nextMatches] = await Promise.all([
+        getStandings(leagueId).catch(()=>[]),
+        getNextEvents(leagueId).catch(()=>[])
+      ]);
+
+      // Table
+      if (standings.length === 0) {
+        tableWrapEl.innerHTML = '<div class="error-box">⚠️ Tabela não disponível para este campeonato no momento.<br><small>A API pode não ter dados da temporada atual.</small></div>';
+      } else {
+        const total = standings.length;
+        tableWrapEl.innerHTML = `
+          <div class="table-wrap fade-up">
+            <table class="standings-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th style="text-align:left">Time</th>
+                  <th title="Jogos">J</th>
+                  <th title="Vitórias">V</th>
+                  <th class="hide-mobile" title="Empates">E</th>
+                  <th class="hide-mobile" title="Derrotas">D</th>
+                  <th class="hide-mobile" title="Gols Pró">GP</th>
+                  <th class="hide-mobile" title="Gols Contra">GC</th>
+                  <th title="Saldo de Gols">SG</th>
+                  <th title="Pontos"><strong>PTS</strong></th>
+                  <th class="hide-mobile">Forma</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${standings.map((row, i) => {
+                  const pos = i + 1;
+                  const qc = qualClass(pos, total);
+                  const badgeHtml = row.strBadge
+                    ? `<img src="${row.strBadge}" alt="${row.strTeam}" loading="lazy" onerror="this.style.display='none'">`
+                    : row.strTeam?.slice(0,2).toUpperCase();
+                  const sg = (+row.intGoalsFor - +row.intGoalsAgainst);
+                  return `
+                  <tr>
+                    <td class="pos ${qc}">${pos}</td>
+                    <td>
+                      <div class="team-cell">
+                        <div class="team-cell-badge">${badgeHtml}</div>
+                        <span style="font-weight:600;font-size:.88rem">${row.strTeam || '—'}</span>
+                      </div>
+                    </td>
+                    <td>${row.intPlayed ?? '—'}</td>
+                    <td>${row.intWin ?? '—'}</td>
+                    <td class="hide-mobile">${row.intDraw ?? '—'}</td>
+                    <td class="hide-mobile">${row.intLoss ?? '—'}</td>
+                    <td class="hide-mobile">${row.intGoalsFor ?? '—'}</td>
+                    <td class="hide-mobile">${row.intGoalsAgainst ?? '—'}</td>
+                    <td style="color:${sg>0?'var(--green)':sg<0?'var(--red)':'var(--grey)'}">${sg > 0 ? '+'+sg : sg}</td>
+                    <td><strong style="font-family:var(--ff-d);font-size:1.1rem;color:var(--green)">${row.intPoints ?? '—'}</strong></td>
+                    <td class="hide-mobile"><div class="form-dots">${formDots(row.strForm)}</div></td>
+                  </tr>`;
+                }).join('')}
+              </tbody>
+            </table>
+          </div>
+          <div class="legend fade-up" style="margin-top:1rem">
+            <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Fase de Grupos (Champions)</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#4fa3ff"></div>Europa League</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>Rebaixamento</div>
+            <div class="legend-item"><div class="form-dot w" style="display:inline-block"></div>&nbsp;V &nbsp;<div class="form-dot d" style="display:inline-block"></div>&nbsp;E &nbsp;<div class="form-dot l" style="display:inline-block"></div>&nbsp;D</div>
+          </div>`;
+      }
+
+      // Next matches
+      if (nextMatches.length === 0) {
+        nextEl.innerHTML = '<div class="empty-state"><div class="icon">📭</div><p>Sem jogos programados.</p></div>';
+      } else {
+        nextEl.innerHTML = nextMatches.slice(0,6).map(e => renderMatchCard(e, leagueName)).join('');
+      }
+      revealAll();
+    }
+
+    // Init from URL or default
+    const params = new URLSearchParams(location.search);
+    const initLeague = params.get('league') || LEAGUES[0].id;
+    const initName = LEAGUES.find(l => l.id === initLeague)?.name || LEAGUES[0].name;
+
+    selectorEl.querySelectorAll('.league-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.id === initLeague);
+    });
+    loadLeague(initLeague, initName);
+
+    selectorEl.addEventListener('click', e => {
+      const btn = e.target.closest('.league-btn');
+      if (!btn) return;
+      selectorEl.querySelectorAll('.league-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      history.replaceState(null,'',`tabela.html?league=${btn.dataset.id}`);
+      loadLeague(btn.dataset.id, btn.dataset.name);
+    });
+  })();
+  </script>
+</body>
+</html>

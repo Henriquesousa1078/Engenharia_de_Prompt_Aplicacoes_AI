@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Detalhes do Jogo – Onde Assistir</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .back-link{display:inline-flex;align-items:center;gap:.5rem;font-size:.82rem;color:var(--grey);transition:color var(--t);margin-bottom:2rem}
+    .back-link:hover{color:var(--green)}
+
+    /* Match hero */
+    .match-hero{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;position:relative;margin-bottom:2rem}
+    .match-hero-top{background:linear-gradient(135deg,#0d1a0d 0%,#111811 100%);padding:2.5rem 2rem;position:relative}
+    .match-hero-top::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--green),transparent)}
+    .match-hero-league{text-align:center;margin-bottom:1.5rem}
+    .match-hero-league span{font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--green)}
+    .match-hero-teams{display:grid;grid-template-columns:1fr auto 1fr;gap:1.5rem;align-items:center}
+    .hero-team{text-align:center}
+    .hero-badge-lg{width:80px;height:80px;border-radius:50%;border:2px solid var(--border);overflow:hidden;background:var(--dark);display:grid;place-items:center;font-size:2rem;margin:0 auto .8rem}
+    .hero-badge-lg img{width:100%;height:100%;object-fit:contain;padding:6px}
+    .hero-team-name{font-family:var(--ff-d);font-size:clamp(1.2rem,3vw,1.8rem);letter-spacing:.04em;line-height:1.1}
+    .hero-score{text-align:center}
+    .score-big{font-family:var(--ff-d);font-size:clamp(2.5rem,8vw,5rem);letter-spacing:.05em;line-height:1;color:var(--white)}
+    .score-sep{color:var(--green-dim);margin:0 .2rem}
+    .score-vs-big{font-size:1rem;font-weight:700;letter-spacing:.14em;color:var(--grey)}
+    .match-hero-bottom{padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;border-top:1px solid var(--border)}
+    .meta-item{display:flex;align-items:center;gap:.5rem;font-size:.85rem;color:var(--grey)}
+    .meta-item strong{color:var(--white)}
+
+    /* Broadcast section */
+    .broadcast-section{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.8rem;margin-bottom:1.5rem}
+    .broadcast-section h2{font-family:var(--ff-d);font-size:1.5rem;margin-bottom:1.2rem;letter-spacing:.04em}
+    .broadcast-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.8rem}
+    .broadcast-card{background:var(--dark);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;display:flex;align-items:center;gap:.8rem;transition:all var(--t)}
+    .broadcast-card:hover{border-color:var(--green);transform:translateY(-2px)}
+    .broadcast-card a{display:flex;align-items:center;gap:.8rem;width:100%;color:inherit}
+    .broadcast-ico{font-size:1.6rem;width:44px;height:44px;display:grid;place-items:center;background:var(--green-muted);border-radius:9px;border:1px solid rgba(0,224,90,.2);flex-shrink:0}
+    .broadcast-name{font-weight:600;font-size:.9rem}
+    .broadcast-type{font-size:.72rem;color:var(--grey);margin-top:.1rem}
+    .broadcast-arrow{margin-left:auto;color:var(--green);font-size:.9rem}
+
+    /* Info grid */
+    .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
+    .info-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem}
+    .info-card h3{font-family:var(--ff-d);font-size:1.2rem;letter-spacing:.04em;margin-bottom:1rem;color:var(--green)}
+    .info-row{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid rgba(31,43,31,.4);gap:1rem}
+    .info-row:last-child{border-bottom:none}
+    .info-label{font-size:.8rem;color:var(--grey);font-weight:300}
+    .info-value{font-size:.88rem;font-weight:600;text-align:right;max-width:60%}
+
+    /* Stats bars */
+    .stat-bar-wrap{margin:.6rem 0}
+    .stat-bar-labels{display:flex;justify-content:space-between;font-size:.78rem;margin-bottom:.3rem}
+    .stat-bar-labels span:last-child{color:var(--green)}
+    .stat-bar-track{height:5px;background:var(--border);border-radius:3px;overflow:hidden}
+    .stat-bar-fill{height:100%;background:var(--green);border-radius:3px;transition:width .8s ease}
+
+    /* Related matches */
+    .related-section{margin-top:2rem}
+    .related-section h2{font-family:var(--ff-d);font-size:1.6rem;letter-spacing:.04em;margin-bottom:1.2rem}
+    .related-grid{display:grid;gap:.8rem}
+
+    @media(max-width:700px){
+      .info-grid{grid-template-columns:1fr}
+      .match-hero-teams{gap:.8rem}
+      .hero-badge-lg{width:56px;height:56px;font-size:1.4rem}
+      .match-hero-bottom{flex-direction:column;align-items:flex-start}
+      .broadcast-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="container">
+      <a href="index.html" class="nav-logo">⚽ Onde<em>Assistir</em></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="jogos.html">Jogos</a></li>
+        <li><a href="tabela.html">Tabela</a></li>
+        <li><a href="jogos.html" class="nav-cta">Ver Jogos</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </nav>
+  </header>
+
+  <main class="page-wrap">
+    <div class="container" style="padding-top:2rem">
+      <a href="javascript:history.back()" class="back-link">← Voltar</a>
+      <div id="matchContent"></div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">⚽ Onde<em>Assistir</em></div>
+        <nav class="footer-links">
+          <a href="index.html">Início</a><a href="jogos.html">Jogos</a><a href="tabela.html">Tabela</a>
+        </nav>
+      </div>
+      <p class="footer-copy">© 2025 OndeAssistir — dados via TheSportsDB (CC BY-SA)</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+  (async () => {
+    const { getEventDetails, getBroadcasters, formatDate, formatTime, statusBadge, renderMatchCard, getNextEvents, LEAGUES, revealAll } = window.OA;
+
+    const contentEl = document.getElementById('matchContent');
+    const params = new URLSearchParams(location.search);
+    const eventId = params.get('id');
+
+    if (!eventId) {
+      contentEl.innerHTML = '<div class="error-box">⚠️ ID do jogo não informado. <a href="jogos.html" style="color:var(--green)">Ver todos os jogos</a></div>';
+      return;
+    }
+
+    contentEl.innerHTML = `
+      <div class="skeleton" style="height:280px;margin-bottom:1rem"></div>
+      <div class="skeleton" style="height:120px;margin-bottom:1rem"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+        <div class="skeleton" style="height:180px"></div>
+        <div class="skeleton" style="height:180px"></div>
+      </div>`;
+
+    let event;
+    try {
+      event = await getEventDetails(eventId);
+    } catch {
+      contentEl.innerHTML = '<div class="error-box">⚠️ Não foi possível carregar os detalhes do jogo.</div>';
+      return;
+    }
+
+    if (!event) {
+      contentEl.innerHTML = '<div class="error-box">⚠️ Jogo não encontrado. <a href="jogos.html" style="color:var(--green)">Ver todos os jogos</a></div>';
+      return;
+    }
+
+    const broadcasters = getBroadcasters(event.strLeague || '');
+    const hasScore = event.intHomeScore !== null && event.intHomeScore !== undefined && event.intHomeScore !== '';
+
+    // Build broadcaster types
+    const typeMap = { 'TV Aberta':'Canal Aberto','TV a Cabo':'TV a Cabo','YouTube & Twitch':'Streaming Grátis','Streaming Pago':'Streaming' };
+    const broadcastCardsHtml = broadcasters.map(b => `
+      <div class="broadcast-card">
+        <a href="${b.url}" target="_blank" rel="noopener" aria-label="Assistir em ${b.name}">
+          <div class="broadcast-ico">${b.icon}</div>
+          <div>
+            <div class="broadcast-name">${b.name}</div>
+            <div class="broadcast-type">${b.type || 'Transmissão Oficial'}</div>
+          </div>
+          <span class="broadcast-arrow">↗</span>
+        </a>
+      </div>`).join('');
+
+    // Lineup HTML
+    const homeLineup = event.strLineupHometeam ? event.strLineupHometeam.replace(/;/g,'<br>') : null;
+    const awayLineup = event.strLineupAwayteam ? event.strLineupAwayteam.replace(/;/g,'<br>') : null;
+
+    // Home/away badges
+    const homeBadge = event.strHomeTeamBadge
+      ? `<img src="${event.strHomeTeamBadge}" alt="${event.strHomeTeam}" loading="lazy" onerror="this.parentElement.textContent='⚽'">`
+      : '⚽';
+    const awayBadge = event.strAwayTeamBadge
+      ? `<img src="${event.strAwayTeamBadge}" alt="${event.strAwayTeam}" loading="lazy" onerror="this.parentElement.textContent='⚽'">`
+      : '⚽';
+
+    // League table link
+    const league = LEAGUES.find(l => event.strLeague && event.strLeague.includes(l.name.split(' ')[0]));
+    const tableLink = league ? `<a href="tabela.html?league=${league.id}" class="btn-ghost btn-sm" style="margin-top:.5rem">📊 Ver Tabela do Campeonato</a>` : '';
+
+    document.title = `${event.strHomeTeam} vs ${event.strAwayTeam} – Onde Assistir`;
+
+    contentEl.innerHTML = `
+      <!-- Match Hero -->
+      <div class="match-hero fade-up">
+        <div class="match-hero-top">
+          <div class="match-hero-league">
+            <span>🏆 ${event.strLeague || '—'} ${event.strSeason ? '· '+event.strSeason : ''}</span>
+            <div style="margin-top:.5rem">${statusBadge(event)}</div>
+          </div>
+          <div class="match-hero-teams">
+            <div class="hero-team">
+              <div class="hero-badge-lg">${homeBadge}</div>
+              <div class="hero-team-name">${event.strHomeTeam || '—'}</div>
+            </div>
+            <div class="hero-score">
+              ${hasScore
+                ? `<div class="score-big"><span>${event.intHomeScore}</span><span class="score-sep"> — </span><span>${event.intAwayScore}</span></div>`
+                : `<div class="score-vs-big">VS</div>`}
+              ${event.strStatus === 'In Progress' || event.strStatus === '1H' || event.strStatus === '2H'
+                ? `<div style="font-size:.75rem;color:var(--red);font-weight:700;margin-top:.3rem;letter-spacing:.1em">⏱ AO VIVO</div>` : ''}
+            </div>
+            <div class="hero-team">
+              <div class="hero-badge-lg">${awayBadge}</div>
+              <div class="hero-team-name">${event.strAwayTeam || '—'}</div>
+            </div>
+          </div>
+        </div>
+        <div class="match-hero-bottom">
+          <div class="meta-item">📅 <strong>${formatDate(event.dateEvent)}</strong></div>
+          <div class="meta-item">⏰ <strong>${event.strTime ? formatTime(event.strTime)+' (Brasília)' : '—'}</strong></div>
+          <div class="meta-item">📍 <strong>${event.strVenue || 'Não informado'}</strong></div>
+          <div class="meta-item">👟 <strong>${event.strReferee || 'Árbitro não informado'}</strong></div>
+          ${tableLink}
+        </div>
+      </div>
+
+      <!-- Broadcast -->
+      <div class="broadcast-section fade-up">
+        <h2>📺 Onde Assistir</h2>
+        <div class="broadcast-grid">${broadcastCardsHtml}</div>
+      </div>
+
+      <!-- Info grid -->
+      <div class="info-grid fade-up">
+        <div class="info-card">
+          <h3>ℹ️ Detalhes</h3>
+          <div class="info-row"><span class="info-label">Campeonato</span><span class="info-value">${event.strLeague || '—'}</span></div>
+          <div class="info-row"><span class="info-label">Temporada</span><span class="info-value">${event.strSeason || '—'}</span></div>
+          <div class="info-row"><span class="info-label">Rodada</span><span class="info-value">${event.intRound ? 'Rodada '+event.intRound : '—'}</span></div>
+          <div class="info-row"><span class="info-label">Estádio</span><span class="info-value">${event.strVenue || '—'}</span></div>
+          <div class="info-row"><span class="info-label">País</span><span class="info-value">${event.strCountry || '—'}</span></div>
+          <div class="info-row"><span class="info-label">Árbitro</span><span class="info-value">${event.strReferee || '—'}</span></div>
+        </div>
+        <div class="info-card">
+          <h3>📊 Resultado</h3>
+          ${hasScore ? `
+          <div class="info-row"><span class="info-label">${event.strHomeTeam}</span><span class="info-value" style="color:var(--green);font-family:var(--ff-d);font-size:1.3rem">${event.intHomeScore}</span></div>
+          <div class="info-row"><span class="info-label">${event.strAwayTeam}</span><span class="info-value" style="color:var(--green);font-family:var(--ff-d);font-size:1.3rem">${event.intAwayScore}</span></div>
+          ${event.intHomeScore !== event.intAwayScore ? `
+          <div class="info-row"><span class="info-label">Vencedor</span>
+            <span class="info-value" style="color:var(--green)">
+              ${+event.intHomeScore > +event.intAwayScore ? event.strHomeTeam : event.strAwayTeam}
+            </span>
+          </div>` : '<div class="info-row"><span class="info-label">Resultado</span><span class="info-value">Empate</span></div>'}
+          ${event.intHomeScore !== null && event.intAwayScore !== null ? `
+          <div class="stat-bar-wrap">
+            <div class="stat-bar-labels"><span>${event.strHomeTeam}</span><span>${event.strAwayTeam}</span></div>
+            <div class="stat-bar-track"><div class="stat-bar-fill" style="width:${Math.round((+event.intHomeScore/(+event.intHomeScore+ +event.intAwayScore||1))*100)}%"></div></div>
+          </div>` : ''}
+          ` : `<div class="info-row"><span class="info-label">Status</span><span class="info-value">${event.strStatus || 'Aguardando'}</span></div>`}
+          ${event.strDescriptionEN ? `<div style="margin-top:.8rem;font-size:.82rem;color:var(--grey);font-weight:300;line-height:1.6">${event.strDescriptionEN}</div>` : ''}
+        </div>
+      </div>
+
+      <!-- Lineup -->
+      ${(homeLineup || awayLineup) ? `
+      <div class="info-grid fade-up">
+        <div class="info-card">
+          <h3>🟢 ${event.strHomeTeam}</h3>
+          <div style="font-size:.82rem;color:var(--grey);line-height:1.9;font-weight:300">${homeLineup || 'Escalação não disponível'}</div>
+        </div>
+        <div class="info-card">
+          <h3>🔴 ${event.strAwayTeam}</h3>
+          <div style="font-size:.82rem;color:var(--grey);line-height:1.9;font-weight:300">${awayLineup || 'Escalação não disponível'}</div>
+        </div>
+      </div>` : ''}
+
+      <!-- Related: next events same league -->
+      <div class="related-section fade-up" id="relatedSection">
+        <h2>Mais Jogos do Campeonato</h2>
+        <div id="relatedGrid" class="related-grid"><div class="skeleton" style="height:80px"></div><div class="skeleton" style="height:80px"></div></div>
+      </div>
+    `;
+
+    revealAll();
+
+    // Load related
+    if (league) {
+      try {
+        const { getNextEvents } = window.OA;
+        const related = await getNextEvents(league.id);
+        const filtered = related.filter(e => e.idEvent !== eventId).slice(0,4);
+        document.getElementById('relatedGrid').innerHTML = filtered.length
+          ? filtered.map(e => renderMatchCard(e, league.name)).join('')
+          : '<div class="empty-state" style="padding:1rem"><p>Nenhum jogo relacionado.</p></div>';
+        revealAll();
+      } catch {
+        document.getElementById('relatedGrid').innerHTML = '';
+      }
+    } else {
+      document.getElementById('relatedSection').remove();
+    }
+  })();
+  </script>
+</body>
+</html>

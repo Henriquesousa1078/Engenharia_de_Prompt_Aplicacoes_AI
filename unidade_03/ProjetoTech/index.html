@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Onde Assistir – Jogos de Hoje</title>
+  <meta name="description" content="Descubra em qual canal ou streaming seu jogo será transmitido. Dados ao vivo de futebol."/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .hero{padding:5rem 0 3rem;position:relative;overflow:hidden}
+    .hero-glow{position:absolute;width:800px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(0,224,90,.13) 0%,transparent 70%);top:-150px;left:50%;transform:translateX(-50%);pointer-events:none}
+    .hero-eyebrow{display:flex;align-items:center;gap:.6rem;margin-bottom:1rem}
+    .pulse{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,224,90,.6)}50%{box-shadow:0 0 0 9px rgba(0,224,90,0)}}
+    .eyebrow-txt{font-size:.73rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green)}
+    .hero-title{font-family:var(--ff-d);font-size:clamp(3rem,9vw,7.5rem);line-height:.92;letter-spacing:.02em}
+    .hero-title em{font-style:normal;color:var(--green)}
+    .hero-desc{color:var(--grey);font-size:1rem;font-weight:300;margin:1.2rem 0 2rem;max-width:48ch}
+    .hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+    .stats-strip{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.5rem 0}
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border)}
+    .stat{background:var(--card);padding:1.2rem 1.5rem;text-align:center}
+    .stat-n{font-family:var(--ff-d);font-size:2.2rem;color:var(--green);letter-spacing:.02em}
+    .stat-l{font-size:.72rem;font-weight:300;color:var(--grey);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem}
+    .section{padding:3.5rem 0}
+    .section-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;margin-bottom:2rem}
+    .matches-grid{display:grid;gap:1rem}
+    .league-filter{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+    @media(max-width:700px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="container">
+      <a href="index.html" class="nav-logo">⚽ Onde<em>Assistir</em></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="jogos.html">Jogos</a></li>
+        <li><a href="tabela.html">Tabela</a></li>
+        <li><a href="jogos.html" class="nav-cta">Ver Jogos</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </nav>
+  </header>
+
+  <main class="page-wrap">
+    <section class="hero">
+      <div class="hero-glow"></div>
+      <div class="container">
+        <div class="hero-eyebrow fade-up"><div class="pulse"></div><span class="eyebrow-txt">Transmissões em Tempo Real</span></div>
+        <h1 class="hero-title fade-up">ONDE<br>VER O<br><em>JOGO?</em></h1>
+        <p class="hero-desc fade-up">Canal aberto, cabo ou streaming — centralizamos tudo para você não perder nenhum lance do seu time.</p>
+        <div class="hero-actions fade-up">
+          <a href="jogos.html" class="btn-primary">⚽ Ver Todos os Jogos</a>
+          <a href="tabela.html" class="btn-ghost">🏆 Ver Tabela</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="stats-strip">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat fade-up"><div class="stat-n">+30</div><div class="stat-l">Campeonatos</div></div>
+          <div class="stat fade-up"><div class="stat-n">+500</div><div class="stat-l">Jogos/Mês</div></div>
+          <div class="stat fade-up"><div class="stat-n">+20</div><div class="stat-l">Canais & Streamings</div></div>
+          <div class="stat fade-up"><div class="stat-n">24/7</div><div class="stat-l">Atualizado</div></div>
+        </div>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head fade-up">
+          <div>
+            <span class="tag live"><span class="live-dot"></span>Ao Vivo Agora</span>
+            <h2 class="section-title">JOGOS AO VIVO</h2>
+          </div>
+          <a href="jogos.html?filter=live" class="btn-ghost btn-sm">Ver todos →</a>
+        </div>
+        <div id="liveMatches" class="matches-grid"></div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div class="section-head fade-up">
+          <div>
+            <span class="tag" style="color:#ffd700;background:#2a2000;border-color:#5a4000">📅 Próximos</span>
+            <h2 class="section-title">PRÓXIMOS JOGOS</h2>
+          </div>
+          <a href="jogos.html" class="btn-ghost btn-sm">Ver calendário →</a>
+        </div>
+        <div class="league-filter" id="leagueFilter"></div>
+        <div id="upcomingMatches" class="matches-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">⚽ Onde<em>Assistir</em></div>
+        <nav class="footer-links">
+          <a href="index.html">Início</a>
+          <a href="jogos.html">Jogos</a>
+          <a href="tabela.html">Tabela</a>
+        </nav>
+      </div>
+      <p class="footer-copy">© 2025 OndeAssistir — dados via TheSportsDB (CC BY-SA)</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+  (async () => {
+    const { LEAGUES, getLiveMatches, getNextEvents, renderMatchCard, renderSkeletons, revealAll } = window.OA;
+
+    const liveEl = document.getElementById('liveMatches');
+    liveEl.innerHTML = renderSkeletons(2);
+    try {
+      const live = await getLiveMatches();
+      const soccer = live.filter(e => e.strSport === 'Soccer' || !e.strSport);
+      if (soccer.length === 0) {
+        liveEl.innerHTML = '<div class="empty-state"><div class="icon">🌙</div><p>Nenhum jogo ao vivo no momento.<br>Confira os próximos jogos abaixo.</p></div>';
+      } else {
+        liveEl.innerHTML = soccer.slice(0,6).map(e => renderMatchCard(e, e.strLeague)).join('');
+      }
+    } catch {
+      liveEl.innerHTML = '<div class="error-box">⚠️ Não foi possível carregar jogos ao vivo.</div>';
+    }
+
+    const filterEl = document.getElementById('leagueFilter');
+    filterEl.innerHTML = ['Todos',...LEAGUES.map(l=>l.flag+' '+l.name)].map((name,i) =>
+      `<button class="filter-chip ${i===0?'active':''}" data-idx="${i-1}">${name}</button>`
+    ).join('');
+
+    const upEl = document.getElementById('upcomingMatches');
+    upEl.innerHTML = renderSkeletons(4);
+
+    let allUpcoming = [];
+    try {
+      const results = await Promise.all(LEAGUES.map(l => getNextEvents(l.id).catch(()=>[])));
+      LEAGUES.forEach((l,i) => allUpcoming.push(...results[i].map(e=>({...e,_leagueName:l.name,_leagueId:l.id}))));
+      allUpcoming.sort((a,b) => new Date(a.dateEvent+' '+(a.strTime||'23:59')) - new Date(b.dateEvent+' '+(b.strTime||'23:59')));
+    } catch {
+      upEl.innerHTML = '<div class="error-box">⚠️ Erro ao carregar próximos jogos.</div>';
+      return;
+    }
+
+    function renderUpcoming(leagueIdx) {
+      const filtered = leagueIdx < 0 ? allUpcoming : allUpcoming.filter(e => e._leagueId === LEAGUES[leagueIdx].id);
+      upEl.innerHTML = filtered.length === 0
+        ? '<div class="empty-state"><div class="icon">📭</div><p>Nenhum jogo encontrado.</p></div>'
+        : filtered.slice(0,12).map(e => renderMatchCard(e, e._leagueName)).join('');
+      revealAll();
+    }
+    renderUpcoming(-1);
+
+    filterEl.addEventListener('click', e => {
+      const btn = e.target.closest('.filter-chip');
+      if (!btn) return;
+      filterEl.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderUpcoming(+btn.dataset.idx);
+    });
+
+    revealAll();
+  })();
+  </script>
+</body>
+</html>

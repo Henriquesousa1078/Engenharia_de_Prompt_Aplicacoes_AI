@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Jogos – Onde Assistir</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .page-hero{padding:3rem 0 2rem;border-bottom:1px solid var(--border);margin-bottom:2.5rem}
+    .controls{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center;margin-bottom:1.5rem}
+    .controls-right{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+    .tab-bar{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:2rem}
+    .tab-btn{flex:1;padding:.6rem 1rem;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);background:transparent;border:none;cursor:pointer;transition:all var(--t)}
+    .tab-btn.active{background:var(--green);color:var(--black)}
+    .tab-btn:hover:not(.active){background:var(--card2);color:var(--white)}
+    .matches-grid{display:grid;gap:.9rem}
+    .results-count{font-size:.82rem;color:var(--grey);margin-bottom:1rem}
+    @media(max-width:700px){.controls{grid-template-columns:1fr}.controls-right{display:grid;grid-template-columns:1fr 1fr;gap:.4rem}}
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="container">
+      <a href="index.html" class="nav-logo">⚽ Onde<em>Assistir</em></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="jogos.html">Jogos</a></li>
+        <li><a href="tabela.html">Tabela</a></li>
+        <li><a href="jogos.html" class="nav-cta">Ver Jogos</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </nav>
+  </header>
+
+  <main class="page-wrap">
+    <section class="page-hero">
+      <div class="container">
+        <span class="tag">📅 Calendário Completo</span>
+        <h1 class="section-title" style="margin-top:.6rem">TODOS OS JOGOS</h1>
+        <p class="section-sub">Busque partidas por time, campeonato ou data. Clique no jogo para ver detalhes e onde assistir.</p>
+      </div>
+    </section>
+
+    <div class="container">
+      <!-- Tab: próximos / recentes -->
+      <div class="tab-bar">
+        <button class="tab-btn active" id="tabNext">⏭ Próximos Jogos</button>
+        <button class="tab-btn" id="tabLast">⏮ Jogos Recentes</button>
+        <button class="tab-btn" id="tabLive">🔴 Ao Vivo</button>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" id="searchInput" placeholder="Buscar time, campeonato…" autocomplete="off"/>
+        </div>
+        <div class="controls-right">
+          <select class="select-filter" id="leagueSelect">
+            <option value="">Todos os campeonatos</option>
+          </select>
+          <select class="select-filter" id="dateSelect">
+            <option value="">Qualquer data</option>
+            <option value="today">Hoje</option>
+            <option value="week">Esta semana</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="resultsCount" class="results-count"></div>
+      <div id="matchesGrid" class="matches-grid"></div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">⚽ Onde<em>Assistir</em></div>
+        <nav class="footer-links">
+          <a href="index.html">Início</a><a href="jogos.html">Jogos</a><a href="tabela.html">Tabela</a>
+        </nav>
+      </div>
+      <p class="footer-copy">© 2025 OndeAssistir — dados via TheSportsDB (CC BY-SA)</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+  (async () => {
+    const { LEAGUES, getLiveMatches, getNextEvents, getLastEvents, renderMatchCard, renderSkeletons, revealAll } = window.OA;
+
+    const gridEl    = document.getElementById('matchesGrid');
+    const countEl   = document.getElementById('resultsCount');
+    const searchEl  = document.getElementById('searchInput');
+    const leagueEl  = document.getElementById('leagueSelect');
+    const dateEl    = document.getElementById('dateSelect');
+    const tabNext   = document.getElementById('tabNext');
+    const tabLast   = document.getElementById('tabLast');
+    const tabLive   = document.getElementById('tabLive');
+
+    // Populate league select
+    LEAGUES.forEach(l => {
+      const opt = document.createElement('option');
+      opt.value = l.id;
+      opt.textContent = l.flag + ' ' + l.name;
+      leagueEl.appendChild(opt);
+    });
+
+    let mode = 'next'; // next | last | live
+    let allEvents = [];
+    let liveEvents = [];
+
+    async function loadData() {
+      gridEl.innerHTML = renderSkeletons(6);
+      countEl.textContent = '';
+      if (mode === 'live') {
+        try {
+          liveEvents = (await getLiveMatches()).filter(e => e.strSport === 'Soccer' || !e.strSport);
+        } catch { liveEvents = []; }
+        applyFilters();
+        return;
+      }
+      const fn = mode === 'next' ? getNextEvents : getLastEvents;
+      try {
+        const results = await Promise.all(LEAGUES.map(l => fn(l.id).catch(()=>[])));
+        allEvents = [];
+        LEAGUES.forEach((l,i) => allEvents.push(...results[i].map(e=>({...e,_leagueName:l.name,_leagueId:l.id}))));
+        if (mode === 'next') {
+          allEvents.sort((a,b) => new Date(a.dateEvent+' '+(a.strTime||'23:59')) - new Date(b.dateEvent+' '+(b.strTime||'23:59')));
+        } else {
+          allEvents.sort((a,b) => new Date(b.dateEvent) - new Date(a.dateEvent));
+        }
+      } catch {
+        gridEl.innerHTML = '<div class="error-box">⚠️ Erro ao carregar jogos.</div>';
+        return;
+      }
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const source = mode === 'live' ? liveEvents.map(e=>({...e,_leagueName:e.strLeague,_leagueId:''})) : allEvents;
+      const q = searchEl.value.toLowerCase().trim();
+      const league = leagueEl.value;
+      const dateF = dateEl.value;
+      const today = new Date().toISOString().slice(0,10);
+      const weekEnd = new Date(); weekEnd.setDate(weekEnd.getDate()+7);
+
+      const filtered = source.filter(e => {
+        if (q && !((e.strHomeTeam||'').toLowerCase().includes(q) || (e.strAwayTeam||'').toLowerCase().includes(q) || (e.strLeague||'').toLowerCase().includes(q))) return false;
+        if (league && e._leagueId !== league) return false;
+        if (dateF === 'today' && e.dateEvent !== today) return false;
+        if (dateF === 'week' && (e.dateEvent < today || new Date(e.dateEvent) > weekEnd)) return false;
+        return true;
+      });
+
+      countEl.textContent = `${filtered.length} jogo${filtered.length !== 1 ? 's' : ''} encontrado${filtered.length !== 1 ? 's' : ''}`;
+
+      if (filtered.length === 0) {
+        gridEl.innerHTML = '<div class="empty-state"><div class="icon">📭</div><p>Nenhum jogo encontrado com esses filtros.</p></div>';
+        return;
+      }
+      gridEl.innerHTML = filtered.map(e => renderMatchCard(e, e._leagueName)).join('');
+      revealAll();
+    }
+
+    // Tab switching
+    function setTab(t) {
+      mode = t;
+      [tabNext,tabLast,tabLive].forEach(b => b.classList.remove('active'));
+      ({next:tabNext,last:tabLast,live:tabLive})[t].classList.add('active');
+      loadData();
+    }
+    tabNext.addEventListener('click', () => setTab('next'));
+    tabLast.addEventListener('click', () => setTab('last'));
+    tabLive.addEventListener('click', () => setTab('live'));
+
+    // Filters
+    searchEl.addEventListener('input', applyFilters);
+    leagueEl.addEventListener('change', applyFilters);
+    dateEl.addEventListener('change', applyFilters);
+
+    // URL param
+    const params = new URLSearchParams(location.search);
+    if (params.get('filter') === 'live') setTab('live');
+    else loadData();
+  })();
+  </script>
+</body>
+</html>
