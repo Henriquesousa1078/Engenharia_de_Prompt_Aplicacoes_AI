@@ -41,7 +41,6 @@ O porjeto busca acabar com uma dificuldade de amantes de futebol de "Onde assist
 
 3. Limite de requisições diarias na API que são no maximo 100
 
-4. 
 
 
 ---
