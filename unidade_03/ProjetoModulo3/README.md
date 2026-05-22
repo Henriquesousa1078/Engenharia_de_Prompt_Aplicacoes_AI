@@ -10,7 +10,7 @@ Site para encontrar Onde assistir jogos de futebol
 
 O porjeto busca acabar com uma dificuldade de amantes de futebol de "Onde assistir o jogo", por conta dos diversos direitos de transmissão de emissoras diferentes é muito dificil saber onde X jogo vai passar e em qual canal ou site de streaming. Com o site terá leitura em tempo real de jogos que estão acontecendo no momento e com direcionamento para a plataforma de streaming que está transmitindo o jogo. O objetivo principal do projeto é acabar com a perda de tempo procurando plataforma por plataforma para poder assistir o jogo
 
-[docs](https://github.com/Henriquesousa1078/Engenharia_de_Prompt_Aplicacoes_AI/tree/main/unidade_03/ProjetoModulo3/docs)
+[docs/](https://github.com/Henriquesousa1078/Engenharia_de_Prompt_Aplicacoes_AI/tree/main/unidade_03/ProjetoModulo3/docs)
 ---
 
 ## ⚙️ Plataforma Utilizada
