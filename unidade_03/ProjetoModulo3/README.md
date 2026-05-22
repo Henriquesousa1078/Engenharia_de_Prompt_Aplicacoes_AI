@@ -16,6 +16,7 @@ O porjeto busca acabar com uma dificuldade de amantes de futebol de "Onde assist
 ## ⚙️ Plataforma Utilizada
 
 - Claude.ai
+- Github copilot
 
 - Justificativa da escolha: O claude foi a IA que melhor respondeu os comandos para resolução de pronlemas com codigos, e com idicações de melhorias para o projeto
 
@@ -37,9 +38,11 @@ O porjeto busca acabar com uma dificuldade de amantes de futebol de "Onde assist
 
 1. Baixo limite para produção dentro claude.ai
 
-2. As APIs de leitura de jogos atuais do Brasil é paga
+2. Limete mensal baixo dentro do github copiot
 
-3. Limite de requisições diarias na API que são no maximo 100
+3. As APIs de leitura de jogos atuais do Brasil é paga
+
+4. Limite de requisições diarias na API que são no maximo 100
 
 
 
