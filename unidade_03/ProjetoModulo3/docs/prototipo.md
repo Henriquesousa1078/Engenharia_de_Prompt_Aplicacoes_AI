@@ -1,9 +1,10 @@
 Paginas do projeto
 
-<img width="1900" height="1036" alt="image" src="https://github.com/user-attachments/assets/ff53d670-e80c-44d5-9efa-b801be0c51cb" />
-<img width="1896" height="1039" alt="image" src="https://github.com/user-attachments/assets/ee31991d-63e6-4a38-88d8-20a2dfea93ef" />
-<img width="1896" height="1034" alt="image" src="https://github.com/user-attachments/assets/5c6c487f-bc34-4e1c-8c10-47fedd3ea72e" />
+-Tela inicial
+<img width="1919" height="1035" alt="image" src="https://github.com/user-attachments/assets/30661d27-c7ff-43d0-9998-fdaa563fcc6b" />
 
-Pastas do projeto
+-Jogos que vão acontecer
+<img width="1600" height="766" alt="image" src="https://github.com/user-attachments/assets/21769ec3-c729-4bc6-9246-0383d31e8216" />
 
-<img width="336" height="361" alt="image" src="https://github.com/user-attachments/assets/86326cbd-e865-4ccc-8af1-06a56438eed0" />
+-Tabela de campeonatos
+<img width="1600" height="869" alt="image" src="https://github.com/user-attachments/assets/54c0d273-8ff3-4078-a2be-3ca5da247687" />
