@@ -20,7 +20,7 @@ O principal objetivo do projeto é acabar com a perda de tempo procurando jogo p
 
 ## ⚙️ Plataforma Utilizada
 
-* Bolt.new
+* Bolt.new (lowcode)
 * Claude.ai
 * GitHub Copilot
 
